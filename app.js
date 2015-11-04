@@ -8,7 +8,15 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+//CORS Requests
+//var cors = require('cors')
+
 var app = express();
+
+//app.use(cors());
+
+//Socket.io import
+app.io = require('socket.io')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -54,6 +63,25 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+
+// A user connects to the server (opens a socket)
+app.io.sockets.on('connection', function (socket) {
+
+    // (2): The server recieves a ping event
+    // from the browser on this socket
+    socket.on('ping', function ( data ) {
+  
+    console.log('socket: server recieves ping (2)');
+
+    // (3): Return a pong event to the browser
+    // echoing back the data from the ping event 
+    socket.emit( 'pong', data );   
+
+    console.log('socket: server sends pong (3)');
+
+    });
 });
 
 
