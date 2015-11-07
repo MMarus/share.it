@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var document = require('./routes/document');
+var drive = require('./routes/drive');
 
 //CORS Requests
 //var cors = require('cors')
@@ -30,8 +32,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//Application routes
 app.use('/', routes);
+//select user, who you want to be
 app.use('/users', users);
+
+app.use('/drive', drive);
+
+app.use('/document', document);
+//Selection of the document
+//app.use('/document', document);
 
 
 // catch 404 and forward to error handler
