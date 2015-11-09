@@ -1,6 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a(href="drive") What do you wanna do?
+    h1= 'Welcome to ' + title
+    p Who are you?
+    - each item in rows
+        button.btn.btn-default(onclick="setUser(" + item.id + ")") #{item.name}
