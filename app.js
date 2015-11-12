@@ -5,7 +5,7 @@ var logger = require('morgan');
 //var cookieParser = require('cookie-parser');
 var session = require('express-session')
 var bodyParser = require('body-parser');
-var projects = require('./my_modules/projects.js');
+var projects = require('./my_modules/projects.js').projects;
 var project = require('./my_modules/project.js');
 var paper = require('paper');
 var uuid = require('uuid');
@@ -147,7 +147,8 @@ app.io.sockets.on('connection', function (socket) {
     // User joins a room
 
 
-    socket.on('drawCircle', function (data, session) {
+    socket.on('drawCircle', function (room, data) {
+        project.drawInternal(room, data);
         socket.broadcast.emit('drawCircle', data);
     })
 
@@ -155,8 +156,8 @@ app.io.sockets.on('connection', function (socket) {
 });
 
 function createProject(socket, name) {
-    projects.projects[name] = {};
-    console.log(projects.projects);
+    projects[name] = {};
+    console.log(projects);
     console.log(paper.Project());
 
     //projects[name].project = new paper.Project();
@@ -170,8 +171,7 @@ function createProject(socket, name) {
 }
 
 // Subscribe a client to a room
-function subscribe(socket, data) {
-    var room = data.project;
+function subscribe(socket, room) {
     var user = socket.request.session.user;
     console.log("subscribe user="+user.name);
 
@@ -185,19 +185,50 @@ function subscribe(socket, data) {
     // }
 
     // Create Paperjs instance for this room if it doesn't exist
-    var project = projects.projects[room];
 
-    if (!project) {
+    if (!projects[room]) {
         console.log("made room");
-        projects.projects[room] = {};
+        projects[room] = {};
         // Use the view from the default project. This project is the default
         // one created when paper is instantiated. Nothing is ever written to
         // this project as each room has its own project. We share the View
         // object but that just helps it "draw" stuff to the invisible server
         // canvas.
-        console.log(projects.projects);
-        projects.projects[room].project = new paper.Project();
-        projects.projects[room].external_paths = {};
+
+        projects[room].project = new paper.Project();
+        console.log(projects[room].project);
+        projects[room].external_paths = {};
+        db.getProject(room, function(err, rows){
+            if(rows.length != 1){
+                console.log("could not find the project");
+            }
+            else if(rows.length == 1 && projects[room].project && projects[room].project.activeLayer){
+                console.log('Mame projekt z db, ukladame ho do projektu');
+                if(projects[room].project.activeLayer)
+                    projects[room].project.activeLayer.remove();
+
+                //TODO: upravit
+                projects[room].project.id = rows[0].id;
+                console.log(rows[0]);
+                projects[room].project.importJSON(rows[0].canvas);
+                socket.emit('project:load', rows[0]);
+            }
+            else{
+                console.log("error during loading project from DB");
+            }
+            //console.log(projects[room].project);
+        });
+    } else { // Project exists in memory, no need to load from database
+        console.log('Project exists in memory, no need to load from database');
+        loadFromMemory(room, socket);
+    }
+    app.io.to(room).emit('user:connect', user);
+}
+
+// Send current project to new client
+function loadFromMemory(room, socket) {
+    var project = projects[room].project;
+    if (!project) { // Additional backup check, just in case
         db.getProject(room, function(err, rows){
             if(rows.length != 1){
                 console.log("could not find the project");
@@ -205,31 +236,19 @@ function subscribe(socket, data) {
             else if(rows == 1 && project.project && project.project.activeLayer){
                 console.log('Mame projekt z db, ukladame ho do projektu');
                 project.project.activeLayer.remove();
-                console.log(rows[0]);
+                //console.log(rows[0]);
                 //TODO: upravit
                 project.id = rows[0].id;
                 project.project.importJSON(rows[0].canvas);
+                socket.emit('project:load', rows[0]);
             }
-            console.log(projects.projects[room].project);
+            //console.log(projects[room].project);
         });
-    } else { // Project exists in memory, no need to load from database
-        console.log(projects.projects[room].project);
-    }
-    app.io.to(room).emit('user:connect', user);
-}
-
-// Send current project to new client
-function loadFromMemory(room, socket) {
-    var project = projects.projects[room].project;
-    if (!project) { // Additional backup check, just in case
-        db.load(room, socket);
         return;
     }
-    socket.emit('loading:start');
-    var value = project.exportJSON();
-    socket.emit('project:load', {project: value});
-//  socket.emit('settings', clientSettings);
-    socket.emit('loading:end');
+    console.log('import from the memory');
+    var canvas = project.exportJSON();
+    socket.emit('project:load', {canvas: canvas});
 }
 
 function loadError(socket) {
