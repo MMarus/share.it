@@ -4,4 +4,4 @@ block content
     h1= 'Welcome to ' + title
     p Who are you?
     - each item in rows
-        button.btn.btn-default(onclick="setUser(" + item.id + ")") #{item.name}
+        button.btn.btn-default(onclick="setUser({id:" + item.id + ", name: '"+ item.name +"'})") #{item.name}
