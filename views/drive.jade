@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome and #{title}
+    //List the saved documents
+    button#new.btn(onclick="enterName()") New Project
+    - each item in rows
+        button.btn.btn-default(onclick="openProject('" + item.id + "')") #{item.name}

@@ -1,0 +1,6 @@
+extends layout
+
+block content
+    script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
+    button#save.btn(onclick="saveProject()") Save
+    canvas( id="draw", resize="true", keepalive="true" )
