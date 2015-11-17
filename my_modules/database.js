@@ -34,11 +34,11 @@ var mysql = require('mysql');
 var projects = require('./projects.js');
 
 var pool = mysql.createPool({
-    host: 'localhost',
+    host: 'db55.websupport.sk',
     user: 'shareit',
     password: 'Toj*Oskit4',
     database: 'shareit',
-    port: '3306',
+    port: '3310',
     connectionLimit: 10,
 });
 
