@@ -34,7 +34,7 @@ var mysql = require('mysql');
 var projects = require('./projects.js');
 
 var pool = mysql.createPool({
-    host: 'db55.websupport.sk',
+    host: 'mariadb55.websupport.sk',
     user: 'shareit',
     password: 'Toj*Oskit4',
     database: 'shareit',
@@ -117,8 +117,8 @@ exports.storeProject = function (room) {
     //console.log(project);
     var json = project.exportJSON();
     if(json.length > 65000){
-        alert("WARNING TOO FILE TOO BIG");
         console.log("WARNING TOO FILE TOO BIG");
+        json = "";
     }
 
     //console.log(json);
