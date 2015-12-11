@@ -34,7 +34,7 @@ var mysql = require('mysql');
 var projects = require('./projects.js');
 
 var pool = mysql.createPool({
-    host: 'mariadb55.websupport.sk',
+    host: 'db55.websupport.sk',
     user: 'shareit',
     password: 'Toj*Oskit4',
     database: 'shareit',
