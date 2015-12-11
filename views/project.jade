@@ -2,57 +2,71 @@ extends layout
 
 block content
 
-	script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
+    script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
 
-	div.wrap
-		div.floatleft
-			p
-				div.container-fluid
-					div.row
-						div.col-md-2
-							div.btn-group
-								button.btn.btn-sm.btn-default
-									i.material-icons &#xE05E
-								button.btn.btn-sm.btn-default
-									i.material-icons &#xE24D
-								button.btn.btn-sm.btn-default
-									i.material-icons &#xE161
-							div.btn-group
-								input#full-color-picker
-								button#setLine.btn.btn-sm.btn-default
-									i.material-icons create
-								button#setCircles.btn.btn-sm.btn-default
-									i.material-icons &#xE062;
-							div.btn-group
-								button#save.btn.btn-sm.btn-default(onclick="saveProject()")
-									i.material-icons save
-									button.btn.btn-sm.btn-default.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
-										i.material-icons &#xE85B
-									div.dropdown-menu
-											div.slider.slider-horizontal(style="width: 140px;")
-								button.btn.btn-sm.btn-default
-									i.material-icons format_size
-							div.btn-group
-								button.btn.btn-sm.btn-default
-									i.material-icons crop_din
-								button.btn.btn-sm.btn-default
-									i.material-icons grid_on
-								button.btn.btn-sm.btn-default
-									i.material-icons image
-							div.btn-group
-								button.btn.btn-sm.btn-default
-									i.material-icons brush
-								button.btn.btn-sm.btn-default
-									i.material-icons &#xE40C
-								button.btn.btn-sm.btn-default
-									i.material-icons format_shapes
-							div.btn-group
-								button.btn.btn-sm.btn-default
-									i.material-icons gesture
-								button.btn.btn-sm.btn-default
-									i.material-icons content_cut
-								button.btn.btn-sm.btn-default
-									i.material-icons &#xE872
-		div.floatright
-				script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
-				canvas( id="draw", resize="true", keepalive="true" )
+    div.wrap
+        div.floatleft
+            div.container-fluid
+                div.row
+                    div.col-md-2
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE05E
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE24D
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE161
+                        div.btn-group
+                            input#full-color-picker
+                            button#setLine.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons create
+                            button#setCircles.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE062;
+                        div.btn-group
+                            button#save.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons save
+                                button.btn.btn-sm.btn-default.dropdown-toggle(class="menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                                    i.material-icons &#xE85B
+                                div.dropdown-menu
+                                        div.slider.slider-horizontal(style="width: 140px;")
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons format_size
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons crop_din
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons grid_on
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons image
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons brush
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE40C
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons format_shapes
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons gesture
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons content_cut
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE872
+            div.panel.panel-default
+                div.panel-heading Group chat
+                div.panel-body
+                    p user1: zprava
+                    p user2: zprava
+                    p user3: zprava
+                    p user2: zprava
+                    p user1: zprava
+                    p user4: zprava
+                form.navbar-form.navbar-left(role="search")
+                    div.row
+                        div.form-group
+                            input(type="text" class="form-control" placeholder="Type a message")
+                        button.btn.btn-sm.btn-default(class="chat")
+                            i.material-icons send
+        div.floatright
+                script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
+                canvas( id="draw", resize="true", keepalive="true" )

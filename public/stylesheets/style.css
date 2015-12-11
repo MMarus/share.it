@@ -44,11 +44,23 @@ height: 100%;
 	width: 320px;
 }
 
-button, input {
+.menu{
     width: 20%;
 }
 
 
 .container-fluid {
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+.panel-heading {
+    text-align: center;
+}
+
+.panel.panel-default {
+    margin-top: 50px;
+}
+
+.chat{
+    height: 34px;
 }
