@@ -47,6 +47,34 @@ height: 100%;
 .menu{
     width: 20%;
 }
+.btn-circle {
+    border-radius: 50%;
+    padding: 0.1em;
+    width:1.8em;
+}
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+.loginbutton,
+.signupbutton {
+    display: inline;
+    height: 40px;
+    color: black;
+    font-size: 25px;
+    text-decoration: none;
+    line-height: 36px;
+    box-sizing: border-box;
+    padding: 1px 0 0 0;
+    text-align: center;
+    background-color: #FFA319;
+    border-radius: 4px;
+    margin-top: 30px;
+}
 
 
 .container-fluid {

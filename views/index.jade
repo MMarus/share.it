@@ -12,8 +12,14 @@ block content
             .item.active
                 img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="20" alt="")
                 .carousel-caption
-                    h1 SHARE.IT
-                    h3 the future of cooperation work
+                    h1(style='color:orange;')
+                        strong  SHARE.
+                        span(style='color:blue') IT
+
+
+                    h3(style='color:white;')
+                        strong future of team
+                    h5(style='color:black;') WORK
             .item
                 img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="0" alt="")
                 .carousel-caption
@@ -24,11 +30,27 @@ block content
                     h3 Caption Text
         // Controls
         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
-            span.glyphicon.glyphicon-chevron-left
+            span.material-icons skip_previous
+
         a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
             span.glyphicon.glyphicon-chevron-right
     // Carousel
-    h1= 'Welcome to ' + title
-    p Who are you?
-    - each item in rows
-        button.btn.btn-default(onclick="setUser({id:" + item.id + ", name: '"+ item.name +"'})") #{item.name}
+
+
+    .container.marketing
+        // Three columns of text below the carousel
+        .row
+            div
+                div(style='width:50%;display:inline;')
+                    asp:button
+                div(style='width:50%;display:inline;')
+                    asp:button
+
+            div
+                - each item in rows
+                    button.btn.btn-success.btn-circle.btn-xl(type='button', style='margin-left:auto;margin-right:auto;display:block;margin-top:2%;margin-bottom:0ss%',onclick="setUser({id:" + item.id + ", name: '"+ item.name +"'})")
+            div
+                - each item in rows
+                    button.btn.btn-default(onclick="setUser({id:" + item.id + ", name: '" + item.name + "'})") #{item.name}
+
+
