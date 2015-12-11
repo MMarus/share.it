@@ -3,6 +3,10 @@ var toolsColor = "black";
 var width = 10;
 
 $('.slider').slider()
+    .on('slideStop', function(ev){
+        width = ev.value;
+    });
+
 
 $("#full-color-picker").spectrum({
     replacerClassName: 'btn btn-sm btn-default',
