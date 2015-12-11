@@ -148,8 +148,14 @@ app.io.sockets.on('connection', function (socket) {
 
 
     socket.on('drawCircle', function (room, data) {
-        project.drawInternal(room, data);
+        project.drawInternal(room, data, 'drawCircle');
         socket.broadcast.emit('drawCircle', data);
+    })
+
+    socket.on('drawLine', function (room, data) {
+        project.drawInternal(room, data, 'drawLine');
+        socket.broadcast.emit('drawLine', data);
+
     })
 
 

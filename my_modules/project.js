@@ -8,11 +8,21 @@ projects = projects.projects;
 //TODO: pohraj sa s velkostou canvasu
 var drawing = paper.setup(new paper.Canvas(1920, 1080));
 
-exports.drawInternal = function (room, data) {
+exports.drawInternal = function (room, data, func) {
     var project = projects[room].project;
     project.activate();
+    //console.log(data);
 
-    drawCircle( data.x, data.y, data.radius, data.color );
+    switch(func) {
+        case "drawLine":
+            drawLine( data.x1, data.y1, data.x2, data.y2, data.color, data.width );
+            break;
+        case "drawCircle":
+            drawCircle( data.x, data.y, data.radius, data.color );
+            break;
+        default:
+            console.log("EROOOOOOOOOOOOR ZLA FUNKCiA");
+    }
 
 
     project.view.draw();
@@ -29,3 +39,14 @@ function drawCircle( x, y, radius, color ) {
     //view.draw();
 }
 
+function drawLine( x1, y1, x2, y2, color, width ) {
+    var from = new drawing.Point(x1,y1);
+    var to = new drawing.Point(x2,y2);
+
+    var line1 = new drawing.Path.Line(from, to);
+    line1.strokeColor = color;
+    line1.strokeWidth = width;
+
+    // Refresh the view, so we always get an update, even if the tab is not in focus
+    //view.draw();
+}

@@ -199,11 +199,15 @@ lineTool.onMouseDown = function(event){
 
 lineTool.onMouseUp = function(event){
     to = event.point;
-    drawLine(from, to, toolsColor, width );
+
+    drawLine(from.x, from.y , to.x, to.y, toolsColor, width );
+    emitLine(from.x, from.y , to.x, to.y, toolsColor, width );
 }
 
 
-function drawLine( from, to, color, width ) {
+function drawLine( x1, y1, x2, y2, color, width ) {
+    var from = new Point(x1,y1);
+    var to = new Point(x2,y2);
 
     var line1 = new Path.Line(from, to);
     line1.strokeColor = color;
@@ -215,10 +219,10 @@ function drawLine( from, to, color, width ) {
 
 lineTool.activate();
 
-/*
+
 // This function sends the data for a circle to the server
 // so that the server can broadcast it to every other user
-function emitLine( x, y, radius, color ) {
+function emitLine( x1, y1, x2, y2, color, width ) {
 
 
     // Each Socket.IO connection has a unique session id
@@ -226,32 +230,33 @@ function emitLine( x, y, radius, color ) {
 
     // An object to describe the circle's draw data
     var data = {
-        x: x,
-        y: y,
-        radius: radius,
-        color: color
+        x1: x1,
+        y1: y1,
+        x2: x2,
+        y2: y2,
+        color: color,
+        width: width
     };
+    console.log( data );
     console.log("name befor emit circle="+name);
     // send a 'drawCircle' event with data and sessionId to the server
-    socket.emit( 'drawCircle', name, data);
+    socket.emit( 'drawLine', name, data);
 
     // Lets have a look at the data we're sending
-    console.log( data )
+
 
 }
 
 
 // Listen for 'drawCircle' events
 // created by other users
-socket.on( 'drawCircle', function( data ) {
-
-    console.log( 'drawCircle event recieved:', data );
+socket.on( 'drawLine', function( data ) {
 
     // Draw the circle using the data sent
     // from another user
-    drawCircle( data.x, data.y, data.radius, data.color );
+    drawLine( data.x1, data.y1, data.x2, data.y2, data.color, data.width );
 
-})*/
+})
 
 //////////////////////LINE TOOOL///////////////////////
 

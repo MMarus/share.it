@@ -371,7 +371,7 @@
 
 	$.fn.slider.defaults = {
 		min: 0,
-		max: 10,
+		max: 20,
 		step: 1,
 		orientation: 'horizontal',
 		value: 5,
