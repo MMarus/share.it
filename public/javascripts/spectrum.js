@@ -3,6 +3,20 @@
 // Author: Brian Grinstead
 // License: MIT
 
+
+$(document).ready(function(){
+    $('#normal').click(function(){
+        document.body.style.cursor="default";
+    });
+});
+
+$(document).ready(function(){
+    $('#grab').click(function(e){
+        e.stopPropagation();
+        document.body.style.cursor="move";
+    });
+});
+
 (function (factory) {
     "use strict";
 
