@@ -364,6 +364,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 /* Replacer (the little preview div that shows up instead of the <input>) */
 .sp-replacer {
     margin:0;
+    width: 20%;
     overflow:hidden;
     cursor:pointer;
     padding: 4px;
@@ -398,6 +399,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border: solid 1px #222;
     margin-bottom: 3px;
     margin-top: 2px;
+    margin-left: 10px;
     z-index: 0;
 }
 
