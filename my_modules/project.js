@@ -28,3 +28,4 @@ function drawCircle( x, y, radius, color ) {
     // Refresh the view, so we always get an update, even if the tab is not in focus
     //view.draw();
 }
+
