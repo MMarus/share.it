@@ -161,7 +161,7 @@ exports.storeProject = function (room) {
     var json = project.exportJSON();
     if(json.length > 65000){
         console.log("WARNING TOO FILE TOO BIG");
-        json = "";
+        json = "[]";
     }
 
     //console.log(json);
