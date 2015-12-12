@@ -261,17 +261,17 @@ socket.on( 'drawLine', function( data ) {
 //////////////////////LINE TOOOL///////////////////////
 
 
-//////////drag TOOL////////////////
-var dragTool = new Tool();
+//////////curve TOOL////////////////
+var curveTool = new Tool();
 
 var hitOptions = {
     segments: true,
     stroke: true,
     fill: true,
-    tolerance: 1
+    tolerance: 5
 };
 
-dragTool.onMouseMove = function(event) {
+curveTool.onMouseMove = function(event) {
     var hitResult = project.hitTest(event.point, hitOptions);
     project.activeLayer.selected = false;
     if (hitResult && hitResult.item){
@@ -284,7 +284,7 @@ dragTool.onMouseMove = function(event) {
 
 };
 
-dragTool.onMouseDown = function(event) {
+curveTool.onMouseDown = function(event) {
     segment = path = null;
     var hitResult = project.hitTest(event.point, hitOptions);
 
@@ -308,7 +308,7 @@ dragTool.onMouseDown = function(event) {
     }
 };
 
-dragTool.onMouseDrag = function(event) {
+curveTool.onMouseDrag = function(event) {
     document.body.style.cursor="move";
     if (segment) {
         segment.point += event.delta;
@@ -318,13 +318,56 @@ dragTool.onMouseDrag = function(event) {
     }
 };
 
-dragTool.onMouseUp = function(event){
+curveTool.onMouseUp = function(event){
     document.body.style.cursor="default";
 };
 
 
-dragTool.activate();
 
+//CURVE TOOL/////
+
+
+//DRAG TOOOL///
+var dragTool = new Tool();
+
+dragTool.onMouseMove = function(event) {
+    var hitResult = project.hitTest(event.point, hitOptions);
+    project.activeLayer.selected = false;
+    if (hitResult && hitResult.item){
+        document.body.style.cursor="move";
+        //hitResult.item.selected = true;
+        hitResult.item.bounds.selected = true;
+
+    }
+    else{
+        document.body.style.cursor="default";
+    }
+
+};
+
+dragTool.onMouseDown = function(event) {
+    segment = path = null;
+    var hitResult = project.hitTest(event.point, hitOptions);
+    path = hitResult.item;
+
+    var location = hitResult.location;
+    path.smooth();
+
+        //hitResult.item.bringToFront();
+
+};
+
+dragTool.onMouseDrag = function(event) {
+    document.body.style.cursor="move";
+    path.position += event.delta;
+};
+
+dragTool.onMouseUp = function(event){
+    document.body.style.cursor="default";
+};
+
+dragTool.activate();
+///DRAG TOOL////
 
 
 //Activation of tools with buttons
@@ -345,7 +388,13 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $('#grab').click(function(e){
+    $('#dragTool').click(function(e){
         dragTool.activate();
+    });
+});
+
+$(document).ready(function(){
+    $('#curveTool').click(function(e){
+        curveTool.activate();
     });
 });
