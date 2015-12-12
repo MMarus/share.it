@@ -182,7 +182,7 @@ socket.on( 'drawCircle', function( data ) {
   // from another user
   drawCircle( data.x, data.y, data.radius, data.color );
   
-})
+});
 /////////////////////CIRCLES DRAWING//////////////////
 
 
@@ -192,18 +192,18 @@ var lineTool = new Tool();
 
 lineTool.NewColor = function(){
     farba = new Color(1, 0, 0);
-}
+};
 
 lineTool.onMouseDown = function(event){
     from = event.point;
-}
+};
 
 lineTool.onMouseUp = function(event){
     to = event.point;
 
     drawLine(from.x, from.y , to.x, to.y, toolsColor, width );
     emitLine(from.x, from.y , to.x, to.y, toolsColor, width );
-}
+};
 
 
 function drawLine( x1, y1, x2, y2, color, width ) {
@@ -218,7 +218,7 @@ function drawLine( x1, y1, x2, y2, color, width ) {
     view.draw();
 }
 
-lineTool.activate();
+//lineTool.activate();
 
 
 // This function sends the data for a circle to the server
@@ -257,14 +257,73 @@ socket.on( 'drawLine', function( data ) {
     // from another user
     drawLine( data.x1, data.y1, data.x2, data.y2, data.color, data.width );
 
-})
-
+});
 //////////////////////LINE TOOOL///////////////////////
 
 
+//////////drag TOOL////////////////
+var dragTool = new Tool();
+
+var hitOptions = {
+    segments: true,
+    stroke: true,
+    fill: true,
+    tolerance: 1
+};
+
+dragTool.onMouseMove = function(event) {
+    var hitResult = project.hitTest(event.point, hitOptions);
+    project.activeLayer.selected = false;
+    if (hitResult && hitResult.item){
+        document.body.style.cursor="move";
+        hitResult.item.selected = true;
+    }
+    else{
+        document.body.style.cursor="default";
+    }
+
+};
+
+dragTool.onMouseDown = function(event) {
+    segment = path = null;
+    var hitResult = project.hitTest(event.point, hitOptions);
+
+    if (event.modifiers.shift) {
+        if (hitResult.type == 'segment') {
+            hitResult.segment.remove();
+        };
+        return;
+    }
+
+    if (hitResult) {
+        path = hitResult.item;
+        if (hitResult.type == 'segment') {
+            segment = hitResult.segment;
+        } else if (hitResult.type == 'stroke') {
+            var location = hitResult.location;
+            segment = path.insert(location.index + 1, event.point);
+            path.smooth();
+        }
+        hitResult.item.bringToFront();
+    }
+};
+
+dragTool.onMouseDrag = function(event) {
+    document.body.style.cursor="move";
+    if (segment) {
+        segment.point += event.delta;
+        path.smooth();
+    } else if (path) {
+        path.position += event.delta;
+    }
+};
+
+dragTool.onMouseUp = function(event){
+    document.body.style.cursor="default";
+};
 
 
-
+dragTool.activate();
 
 
 
@@ -285,3 +344,8 @@ $(document).ready(function(){
     socket.emit('subscribe', projectName)
 });
 
+$(document).ready(function(){
+    $('#grab').click(function(e){
+        dragTool.activate();
+    });
+});
