@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   else{
     var userId = req.session.user.id;
     console.log(userId);
-    db.getProjectsByUser(userId, function(err, rows){
+    db.getProjects(function(err, rows){
       console.log(rows);
       res.render('drive', { title: 'Pick your project',  rows: rows});
     });

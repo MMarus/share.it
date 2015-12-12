@@ -75,10 +75,12 @@ app.use('/', routes);
 //select user, who you want to be
 app.use('/users', users);
 app.use('/drive', drive);
+app.use('/project', routeProject);
 
+/*
 app.get('/project/*', function (req, res) {
     res.render('project', { title: 'Project' });
-});
+});*/
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -121,7 +123,8 @@ app.io.sockets.on('connection', function (socket) {
     //The server recieves a setUser event
     // from the browser on this socket
     socket.on('setUser', function (data) {
-        console.log('socket nastav user=' + data.id + ' userName = '+ data.name );
+        console.log("SETTTTINGGGG USER")
+        console.log(data);
         hs.session.user = data;
         hs.session.save();
     });
@@ -179,7 +182,8 @@ function createProject(socket, name) {
 // Subscribe a client to a room
 function subscribe(socket, room) {
     var user = socket.request.session.user;
-    console.log("subscribe user="+user.name);
+    console.log(user);
+    console.log("SUBSCRIBING ="+user.name);
 
 
     // Subscribe the client to the room
@@ -195,6 +199,7 @@ function subscribe(socket, room) {
     if (!projects[room]) {
         console.log("made room");
         projects[room] = {};
+        projects[room].users = {};
         // Use the view from the default project. This project is the default
         // one created when paper is instantiated. Nothing is ever written to
         // this project as each room has its own project. We share the View
@@ -215,7 +220,7 @@ function subscribe(socket, room) {
 
                 //TODO: upravit
                 projects[room].project.id = rows[0].id;
-                console.log(rows[0]);
+                //console.log(rows[0]);
                 projects[room].project.importJSON(rows[0].canvas);
                 socket.emit('project:load', rows[0]);
             }
@@ -228,7 +233,11 @@ function subscribe(socket, room) {
         console.log('Project exists in memory, no need to load from database');
         loadFromMemory(room, socket);
     }
-    app.io.to(room).emit('user:connect', user);
+
+    projects[room].users[user.id] = user;
+    console.log("PRIPAAAAAAAAAAAAAJA SA USER");
+    console.log(projects[room].users);
+    app.io.to(room).emit('user:connected', projects[room].users);
 }
 
 // Send current project to new client
@@ -244,7 +253,7 @@ function loadFromMemory(room, socket) {
                 project.project.activeLayer.remove();
                 //console.log(rows[0]);
                 //TODO: upravit
-                project.id = rows[0].id;
+                //project.id = rows[0].id;
                 project.project.importJSON(rows[0].canvas);
                 socket.emit('project:load', rows[0]);
             }

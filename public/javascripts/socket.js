@@ -16,16 +16,27 @@ function openProject(project) {
     //var canvas = document.getElementById('draw');
     //paper.setup(canvas);
     //console.log(paper.paperScope.project);
-
-    socket.emit('subscribe', project);
 }
 
-socket.on('user:connect', function( data ) {
-    console.log( 'User connected:'+ data );
-})
+socket.on('user:connected', function( data ) {
+    $( "#usersList").empty();
+    var row;
+    console.log( "NASLEDUJE FORIIIKK");
+    for(row in data){
+        console.log(data[row]);
+        $( "#usersList").append(
+        '<div class="row">' +
+            '<div class="col-md-1">' +
+                '<div style="width: 20px; height: 20px; background-color:'+data[row].color+'"></div>' +
+            '</div>'+
+            '<div class="col-md-6">' +
+                '<p>'+ data[row].name+
+            '</div>'+
+        '</div>');
+    }
 
 
-
+});
 
 
 /*

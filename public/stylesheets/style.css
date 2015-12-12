@@ -78,7 +78,7 @@ height: 100%;
 
 
 .container-fluid {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
 }
 
 .panel-heading {
@@ -86,7 +86,7 @@ height: 100%;
 }
 
 .panel.panel-default {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
 }
 
 .chat{

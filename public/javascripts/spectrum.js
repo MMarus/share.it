@@ -135,8 +135,8 @@ $(document).ready(function(){
                     "</div>",
                     "<div class='sp-initial sp-thumb sp-cf'></div>",
                     "<div class='sp-button-container sp-cf'>",
-                        "<button type='button' class='sp-cancel btn btn-default btn-sm' href='#'></button>",
-                        "<button type='button' class='sp-choose btn btn-primary btn-sm'></button>",
+                        "<a class='sp-cancel' href='#'></a>",
+                        "<button type='button' class='sp-choose'></button>",
                     "</div>",
                 "</div>",
             "</div>"

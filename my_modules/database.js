@@ -67,6 +67,49 @@ exports.getUsers = function (callback) {
     });
 };
 
+exports.getProjectName = function (id, callback) {
+    var sql = "SELECT id, name FROM project WHERE id = "+id;
+    // get a connection from the pool
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log(err);
+            callback(true);
+            return;
+        }
+        // make the query
+        connection.query(sql, function (err, results) {
+            connection.release();
+            if (err) {
+                console.log(err);
+                callback(true);
+                return;
+            }
+            callback(false, results);
+        });
+    });
+};
+
+exports.getProjects = function (callback) {
+    var sql = "SELECT id, name FROM project";
+    // get a connection from the pool
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log(err);
+            callback(true);
+            return;
+        }
+        // make the query
+        connection.query(sql, function (err, results) {
+            connection.release();
+            if (err) {
+                console.log(err);
+                callback(true);
+                return;
+            }
+            callback(false, results);
+        });
+    });
+};
 
 exports.getProjectsByUser = function (userId, callback) {
     var sql = "SELECT id, name FROM project where id =" + userId;

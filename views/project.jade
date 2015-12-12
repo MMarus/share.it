@@ -1,12 +1,22 @@
 extends layout
 
 block content
-
     script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
 
     div.wrap
         div.floatleft
             div.container-fluid
+                div.row
+                    div.panel.panel-danger
+                        div.panel-heading
+                            div.row
+                                div.col-md-6
+                                    h3.panel-title share.it &copy;
+                                div.col-md-6
+                                    h3.panel-title= title
+                        div#usersList
+
+
                 div.row
                     div#normal.col-md-2
                         div.btn-group

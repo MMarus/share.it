@@ -1,13 +1,15 @@
-//COLOR PICKING
+
 var toolsColor = "black";
 var width = 10;
+var projectName = window.location.pathname.split("/")[2];
+
 
 $('.slider').slider()
     .on('slideStop', function(ev){
         width = ev.value;
     });
 
-
+//COLOR PICKING
 $("#full-color-picker").spectrum({
     replacerClassName: 'btn btn-sm btn-default',
     color: "black",
@@ -75,8 +77,7 @@ function setColor(color) {
 
 var name = window.location.pathname.split("/")[2];
 //THIS IS ONLY FOR DEBUGING
-socket.emit('setUser', {id:1, name: 'marek'});
-socket.emit('subscribe', name);
+
 
 // The faster the user moves their mouse
 // the larger the circle will be
@@ -278,5 +279,9 @@ $(document).ready(function(){
     $('#setCircles').click(function(){
         circlesTool.activate();
     });
+});
+
+$(document).ready(function(){
+    socket.emit('subscribe', projectName)
 });
 

@@ -48,9 +48,7 @@ block content
 
             div
                 - each item in rows
-                    button.btn.btn-success.btn-circle.btn-xl(type='button', style='margin-left:auto;margin-right:auto;display:block;margin-top:2%;margin-bottom:0ss%',onclick="setUser({id:" + item.id + ", name: '"+ item.name +"'})")
+                    button.btn.btn-success.btn-circle.btn-xl(type='button', style='margin-left:auto;margin-right:auto;display:block;margin-top:2%;margin-bottom:0ss%',onclick="setUser({id: " + item.id + ", name: '"+ item.name +"', color: '"+ item.color +"'})")
             div
                 - each item in rows
-                    button.btn.btn-default(onclick="setUser({id:" + item.id + ", name: '" + item.name + "'})") #{item.name}
-
-
+                    button.btn.btn-default(onclick="setUser({id: " + item.id + ", name: '"+ item.name +"', color: '"+ item.color +"'})") #{item.name}
