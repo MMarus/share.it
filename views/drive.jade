@@ -13,7 +13,7 @@ block content
                 .item.active
                     img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="20" alt="")
                     .carousel-caption
-                        h1(style='color:orange;')
+                        h1(style='color:orange;font-size:300%;text-align:center')
                             strong  SHARE.
                             span(style='color:blue')
                                 strong IT
@@ -26,15 +26,14 @@ block content
                 .item
                     img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="0" alt="")
                     .carousel-caption
-                        h2
-                            strong Please pick your
+
                         h1
-                            spa(style='color:red;')
-                                strong CO
-                                spa(style='color:blue;')
-                                    strong L
-                                    spa(style='color:green;')
-                                        strong OR
+                            strong Your color is
+                                span
+                                    strong(style='color:'+ user.color +';') #{user.color}
+
+
+
 
             // Controls
             a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
@@ -49,11 +48,14 @@ block content
     .container.marketing
         // Three columns of text below the carousel
         .row
+            .col-lg-4
+                button.btn.btn-success.btn-circle.btn-xl(type='button', style='margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0ss%;',onclick="enterName()",alt='Generic placeholder image')
+                h2(style='text-align:center') New Project
             - each item in rows
                 .col-lg-4
-                    img.img-circle(src='data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==', alt='Generic placeholder image', style='width: 140px; height: 140px;')
-                    h2 Heading
-            .col-lg-4
+                    button.btn.btn-circle.btn-xl(type='button', style='background-color:grey;margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0ss%;',alt='Generic placeholder image',onclick="openProject('" + item.id + "')")
+                    h2(style='text-align:center') #{item.name}
+
 
 
     //List the saved documents
