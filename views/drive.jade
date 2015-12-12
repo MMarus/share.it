@@ -1,8 +1,61 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome and #{title}
+    div(style='background-color:black;')
+        #carousel-example-generic.carousel.slide(data-ride='carousel')
+            // Indicators
+            ol.carousel-indicators
+                li.active(data-target='#carousel-example-generic', data-slide-to='0')
+                li(data-target='#carousel-example-generic', data-slide-to='1')
+                li(data-target='#carousel-example-generic', data-slide-to='2')
+            // Wrapper for slides
+            .carousel-inner
+                .item.active
+                    img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="20" alt="")
+                    .carousel-caption
+                        h1(style='color:orange;')
+                            strong  SHARE.
+                            span(style='color:blue')
+                                strong IT
+
+
+                        h3(style='color:white;')
+                            strong future of team
+                        h5(style='color:lightgray;')
+                            strong WORK
+                .item
+                    img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="0" alt="")
+                    .carousel-caption
+                        h2
+                            strong Please pick your
+                        h1
+                            spa(style='color:red;')
+                                strong CO
+                                spa(style='color:blue;')
+                                    strong L
+                                    spa(style='color:green;')
+                                        strong OR
+
+            // Controls
+            a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
+                span.glyphicon.glyphicon-chevron-left
+
+            a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
+                span.glyphicon.glyphicon-chevron-right
+    // Carousel
+
+    h1(style='font-size:500%;text-align:center') Current projects
+
+    .container.marketing
+        // Three columns of text below the carousel
+        .row
+            - each item in rows
+                .col-lg-4
+                    img.img-circle(src='data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==', alt='Generic placeholder image', style='width: 140px; height: 140px;')
+                    h2 Heading
+            .col-lg-4
+
+
     //List the saved documents
     button#new.btn(onclick="enterName()") New Project
     - each item in rows
