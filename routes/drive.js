@@ -10,10 +10,11 @@ router.get('/', function(req, res, next) {
   }
   else{
     var userId = req.session.user.id;
+    var user = req.session.user;
     console.log(userId);
     db.getProjects(function(err, rows){
       console.log(rows);
-      res.render('drive', { title: 'Pick your project',  rows: rows});
+      res.render('drive', { title: 'Pick your project',  rows: rows, user: user});
     });
   }
 });
