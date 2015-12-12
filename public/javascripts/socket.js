@@ -25,7 +25,7 @@ socket.on('user:connected', function( data ) {
     for(row in data){
         console.log(data[row]);
         $( "#usersList").append(
-        '<div class="row">' +
+        '<div id="userId' + data[row].id + '" class="row">' +
             '<div class="col-md-1">' +
                 '<div style="width: 20px; height: 20px; background-color:'+data[row].color+'"></div>' +
             '</div>'+
@@ -34,9 +34,13 @@ socket.on('user:connected', function( data ) {
             '</div>'+
         '</div>');
     }
-
-
 });
+
+socket.on('user:disconnected', function( data ) {
+    $( "#userId"+data).remove();
+});
+
+
 
 
 /*

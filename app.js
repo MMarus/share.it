@@ -127,10 +127,12 @@ app.io.sockets.on('connection', function (socket) {
         console.log(data);
         hs.session.user = data;
         hs.session.save();
+        socket.userId = data.id;
     });
 
     socket.on('subscribe', function (data) {
         subscribe(socket, data);
+        socket.room = data;
     });
 
 
@@ -162,7 +164,23 @@ app.io.sockets.on('connection', function (socket) {
     })
 
 
+    socket.on('disconnect', function () {
+        unsubscribe(socket);
+    });
 });
+
+function unsubscribe(socket){
+    console.log("ODPAAAAAAAAAAAAAAJAAAAAAA SAAAAAAA USER ");
+    if(socket.room != null){
+        console.log("ODPAAAAAAAAAAAAAAJAAAAAAA SAAAAAAA USER ");
+        var user = socket.request.session.user.id;
+        console.log(user);
+        console.log(projects[socket.room].users);
+        delete projects[socket.room].users[user];
+        socket.leave(socket.room);
+        app.io.to(socket.room).emit('user:disconnected', socket.request.session.user.id);
+    }
+}
 
 function createProject(socket, name) {
     projects[name] = {};
