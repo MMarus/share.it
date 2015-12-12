@@ -119,6 +119,7 @@ module.exports = app;
 app.io.sockets.on('connection', function (socket) {
     var hs = socket.request;
     console.log('A socket with sessionID ' + hs.sessionID + ' connected!');
+    console.log(socket.id);
 
     //The server recieves a setUser event
     // from the browser on this socket
@@ -135,16 +136,7 @@ app.io.sockets.on('connection', function (socket) {
         socket.room = data;
     });
 
-
-
-    socket.on('saveProject', function (data) {
-        console.log("You wanna save the project !!!");
-        console.log("projekt name = " , data);
-        //zavolat db save
-        db.storeProject(data);
-    });
-
-    socket.on('createProject', function (name) {
+     socket.on('createProject', function (name) {
         console.log("Creating new project " + name);
         createProject(socket, name);
     });
@@ -155,17 +147,41 @@ app.io.sockets.on('connection', function (socket) {
     socket.on('drawCircle', function (room, data) {
         project.drawInternal(room, data, 'drawCircle');
         app.io.to(room).emit('drawCircle', data);
-    })
+    });
 
     socket.on('drawLine', function (room, data) {
         project.drawInternal(room, data, 'drawLine');
         app.io.to(room).emit('drawLine', data);
 
-    })
+    });
+
+    socket.on('getUserColor', function(){
+        console.log("DAJ MI FARBU UZIVATELA");
+        app.io.to(socket.id).emit('setUserColor', hs.session.user.color);
+    });
+
+
+
+    socket.on('selectItem', function (data) {
+        app.io.to(socket.room).emit('selectItemRemote', data, socket.id, hs.session.user.color);
+        data.socketId = socket.id;
+        project.drawInternal(socket.room, data, 'selectItem');
+    });
+
+    socket.on('dragItem', function(data){
+        app.io.to(socket.room).emit('dragItemRemote', data, socket.id);
+        data.socketId = socket.id;
+        project.drawInternal(socket.room, data, 'dragItem');
+    });
+
 
 
     socket.on('disconnect', function () {
         unsubscribe(socket);
+    });
+
+    socket.on('saveProject', function(){
+        project.saveProject(socket.room);
     });
 });
 
@@ -255,7 +271,7 @@ function subscribe(socket, room) {
     projects[room].users[user.id] = user;
     console.log("PRIPAAAAAAAAAAAAAJA SA USER");
     console.log(projects[room].users);
-    app.io.to(room).emit('user:connected', projects[room].users);
+    app.io.to(room).emit('user:connected', projects[room].users, user);
 }
 
 // Send current project to new client

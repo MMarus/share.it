@@ -1,6 +1,5 @@
 // Connect to the Node.js Server
 var name = window.location.pathname.split("/")[2];
-var user;
 
 socket = io.connect();
 

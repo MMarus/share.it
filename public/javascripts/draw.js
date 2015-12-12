@@ -1,8 +1,14 @@
-
 var toolsColor = "black";
 var width = 10;
 var projectName = window.location.pathname.split("/")[2];
+var userColor = "black";
 
+socket.emit('getUserColor');
+socket.on('setUserColor', function(color) {
+    userColor = color;
+})
+
+//TODO: DRAG TOOL EMITTING
 
 $('.slider').slider()
     .on('slideStop', function(ev){
@@ -100,7 +106,7 @@ socket.on('project:load', function(row) {
 // The color will always have a red value of 0
 // and will be semi-transparent (the alpha value)
 function randomColor() {
-  
+
   return {
     red: 0,
     green: Math.random(),
@@ -144,8 +150,8 @@ function drawCircle( x, y, radius, color ) {
 
   // Refresh the view, so we always get an update, even if the tab is not in focus
   view.draw();
-} 
-  
+}
+
 
 // This function sends the data for a circle to the server
 // so that the server can broadcast it to every other user
@@ -154,7 +160,7 @@ function emitCircle( x, y, radius, color ) {
 
   // Each Socket.IO connection has a unique session id
   //var sessionId = socket.socket.sessionid;
-  
+
   // An object to describe the circle's draw data
   var data = {
     x: x,
@@ -181,7 +187,7 @@ socket.on( 'drawCircle', function( data ) {
   // Draw the circle using the data sent
   // from another user
   drawCircle( data.x, data.y, data.radius, data.color );
-  
+
 });
 /////////////////////CIRCLES DRAWING//////////////////
 
@@ -332,11 +338,11 @@ var dragTool = new Tool();
 
 dragTool.onMouseMove = function(event) {
     var hitResult = project.hitTest(event.point, hitOptions);
-    project.activeLayer.selected = false;
+    //project.activeLayer.selected = false;
     if (hitResult && hitResult.item){
         document.body.style.cursor="move";
         //hitResult.item.selected = true;
-        hitResult.item.bounds.selected = true;
+        //hitResult.item.bounds.selected = true;
 
     }
     else{
@@ -345,29 +351,106 @@ dragTool.onMouseMove = function(event) {
 
 };
 
+//Treba definovat pred pristupom
+var pathLocal;
+var pathsRemote = {};
+
 dragTool.onMouseDown = function(event) {
-    segment = path = null;
-    var hitResult = project.hitTest(event.point, hitOptions);
-    path = hitResult.item;
-
-    var location = hitResult.location;
-    path.smooth();
-
-        //hitResult.item.bringToFront();
-
+    console.log("ON click POINT");
+    console.log(event.point);
+    selectItemLocal(event.point.x, event.point.y);
 };
+
+function selectItemLocal(x, y){
+    var row;
+    var point = new Point(x, y);
+
+    if(pathLocal && pathLocal.bounds && pathLocal.bounds.selected == true)
+        pathLocal.bounds.selected = false;
+    pathLocal = null;
+
+    var hitResult = project.hitTest(point, hitOptions);
+
+
+    if (hitResult && hitResult.item) {
+        //Treba pozret ci neni uz selektnute niekym inym
+        for(row in pathsRemote){
+            console.log("POROVNAVAM CI SU ROVNAKE VOLADE");
+            console.log(pathsRemote[row].id);
+            console.log(hitResult.item.id);
+            if(pathsRemote[row].id == hitResult.item.id){
+                console.log("AJAJAJAJ SU ROVNAKE ");
+                return;
+            }
+        }
+
+        pathLocal = hitResult.item;
+        hitResult.item.bounds.selected = true;
+        //console.log(socket);
+        hitResult.item.selectedColor = userColor;
+
+        pathLocal.smooth();
+    }
+    socket.emit('selectItem', {x: x, y: y});
+
+}
+
+socket.on( 'selectItemRemote', function( data, socketId, color ) {
+//treba ak neexistuje nic a socketID nech sa resetne aj v poli data
+    if(socket.id != socketId){
+        console.log(data);
+
+        if(pathsRemote[socketId]){
+            console.log("TAAAAAAAAAAAAATO SOCKETID UZ EXISTUJEEEE");
+            //IF NENI TA ISTA PATH?
+            pathsRemote[socketId].bounds.selected = false;
+            //UNSELECT PREDOSLU
+        }
+        else{
+            console.log("NEEEEEEEEEXISTUJEEEE SOCKETID CESTA ");
+        }
+
+        var point = new Point(data.x, data.y);
+
+        var hitResult = project.hitTest(point, hitOptions);
+        if (hitResult && hitResult.item) {
+            console.log("SELECTUJEME CIARKU");
+            pathsRemote[socketId] = hitResult.item;
+
+            hitResult.item.bounds.selected = true;
+            hitResult.item.selectedColor = color;
+
+            console.log(hitResult.item.bounds);
+            pathsRemote[socketId].smooth();
+        }
+        view.draw();
+    }
+});
 
 dragTool.onMouseDrag = function(event) {
-    document.body.style.cursor="move";
-    path.position += event.delta;
+    dragItemLocal(event.delta.x, event.delta.y);
 };
 
-dragTool.onMouseUp = function(event){
-    document.body.style.cursor="default";
-};
+function dragItemLocal(x, y){
+    var point = new Point(x, y);
+    if(pathLocal){
+        document.body.style.cursor="move";
+        pathLocal.position += point;
+        socket.emit('dragItem', {x: x, y: y, id: pathLocal.id});
+    }
+}
 
 dragTool.activate();
-///DRAG TOOL////
+
+socket.on( 'dragItemRemote', function( data, socketId ) {
+    var point = new Point(data.x, data.y);
+    if(pathsRemote[socketId]){
+        pathsRemote[socketId].position += point;
+    }
+    view.draw();
+});
+
+////////////////////////DRAG TOOL////
 
 
 //Activation of tools with buttons
@@ -384,7 +467,14 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    socket.emit('subscribe', projectName)
+    socket.emit('subscribe', projectName);
+    socket.emit('getUserColor', projectName);
+
+    $('#saveProject').click(function(){
+        console.log("SAVING PROJECT");
+        socket.emit('saveProject');
+    });
+
 });
 
 $(document).ready(function(){
@@ -398,3 +488,8 @@ $(document).ready(function(){
         curveTool.activate();
     });
 });
+
+
+//TODO:
+//Pri subscribe poslat ID socketu a ulozit ho ako global identifikator
+//

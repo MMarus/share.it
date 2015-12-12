@@ -20,14 +20,25 @@ exports.drawInternal = function (room, data, func) {
         case "drawCircle":
             drawCircle( data.x, data.y, data.radius, data.color );
             break;
+        case "dragItem":
+            dragItem( data.x, data.y, data.socketId);
+            break;
+        case "selectItem":
+            selectItem( data.x, data.y, data.socketId);
+            break;
         default:
             console.log("EROOOOOOOOOOOOR ZLA FUNKCiA");
     }
 
 
     project.view.draw();
+};
+
+exports.saveProject = function (room) {
     db.storeProject(room);
 }
+
+
 
 function drawCircle( x, y, radius, color ) {
 
@@ -49,4 +60,32 @@ function drawLine( x1, y1, x2, y2, color, width ) {
 
     // Refresh the view, so we always get an update, even if the tab is not in focus
     //view.draw();
+}
+
+
+
+var pathsRemote = {};
+var hitOptions = {
+    segments: true,
+    stroke: true,
+    fill: true,
+    tolerance: 5
+};
+
+function dragItem(x, y, socketId){
+
+    if(pathsRemote[socketId]){
+        pathsRemote[socketId].position.x += x;
+        pathsRemote[socketId].position.y += y;
+    }
+}
+
+function selectItem(x, y, socketId){
+
+    var point = new drawing.Point(x, y);
+
+    var hitResult = drawing.project.hitTest(point, hitOptions);
+    if (hitResult && hitResult.item) {
+        pathsRemote[socketId] = hitResult.item;
+    }
 }
