@@ -1,3 +1,4 @@
+
 var toolsColor = "black";
 var width = 10;
 var projectName = window.location.pathname.split("/")[2];
