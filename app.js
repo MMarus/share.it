@@ -146,12 +146,12 @@ app.io.sockets.on('connection', function (socket) {
 
     socket.on('drawCircle', function (room, data) {
         project.drawInternal(room, data, 'drawCircle');
-        app.io.to(room).emit('drawCircle', data);
+        socket.broadcast.to(room).emit('drawCircle', data);
     });
 
     socket.on('drawLine', function (room, data) {
         project.drawInternal(room, data, 'drawLine');
-        app.io.to(room).emit('drawLine', data);
+        socket.broadcast.to(room).emit('drawLine', data);
 
     });
 
@@ -163,13 +163,13 @@ app.io.sockets.on('connection', function (socket) {
 
 
     socket.on('selectItem', function (data) {
-        app.io.to(socket.room).emit('selectItemRemote', data, socket.id, hs.session.user.color);
+        socket.broadcast.to(socket.room).emit('selectItemRemote', data, socket.id, hs.session.user.color);
         data.socketId = socket.id;
         project.drawInternal(socket.room, data, 'selectItem');
     });
 
     socket.on('dragItem', function(data){
-        app.io.to(socket.room).emit('dragItemRemote', data, socket.id);
+        socket.broadcast.to(socket.room).emit('dragItemRemote', data, socket.id);
         data.socketId = socket.id;
         project.drawInternal(socket.room, data, 'dragItem');
     });
