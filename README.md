@@ -29,6 +29,4 @@ https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-di
 https://github.com/Automattic/node-canvas/wiki/Installation---Ubuntu-and-other-Debian-based-systems
 
 #### Authors:
-Marek Marusic
-Eudard Rybar
-Juraj Vida
+Marek Marusic, Eudard Rybar, Juraj Vida
