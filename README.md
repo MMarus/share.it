@@ -1,6 +1,12 @@
 Welcome to share.it
 ==================
+share.it - real time whiteboard for cooperation.
+Presentation of the project https://docs.google.com/presentation/d/1_mLpoLJ7_hVH-olzXcVue4Lysjl3mY1Fb5DKbrUs3G8/edit?usp=sharing
+
 This project is written in Node.js and uses frameworks Express.js, Socket.io and Paper.js.
+The project was created as a school project. We got 48/55 points for this.
+
+
 
 What you need to install the project:
 -------------------
@@ -21,3 +27,8 @@ https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-di
 
 ### Guide how to get needed packages for Paper.js:
 https://github.com/Automattic/node-canvas/wiki/Installation---Ubuntu-and-other-Debian-based-systems
+
+#### Authors:
+Marek Marusic
+Eudard Rybar
+Juraj Vida
