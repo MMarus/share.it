@@ -6,6 +6,7 @@ Presentation of the project https://docs.google.com/presentation/d/1_mLpoLJ7_hVH
 This project is written in Node.js and uses frameworks Express.js, Socket.io and Paper.js.
 The project was created as a school project. We got 48/55 points for this.
 
+![alt text]( "Image1")
 
 
 What you need to install the project:
