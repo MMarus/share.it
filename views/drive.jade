@@ -35,15 +35,14 @@ block content
                 .item
                     img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="0" alt="")
                     .carousel-caption
-                        h2
-                            strong Please pick your
+
                         h1
-                            spa(style='color:red;')
-                                strong CO
-                                spa(style='color:blue;')
-                                    strong L
-                                    spa(style='color:green;')
-                                        strong OR
+                            strong Your color is&nbsp
+                                span
+                                    strong(style='color:'+ user.color +';') #{user.color}
+
+
+
 
             // Controls
             a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
@@ -53,16 +52,22 @@ block content
                 span.glyphicon.glyphicon-chevron-right
     // Carousel
 
+    h1(style='font-size:500%;text-align:center') Current projects
 
     .container.marketing
         // Three columns of text below the carousel
         .row
-            div
-                div(style='width:50%;display:inline;')
-                    asp:button
-                div(style='width:50%;display:inline;')
-                    asp:button
+            .col-lg-4
+                button.btn.btn-success.btn-circle.btn-xl(type='button', style='margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0ss%;',onclick="enterName()",alt='Generic placeholder image')
+                h2(style='text-align:center') New Project
+            - each item in rows
+                .col-lg-4
+                    button.btn.btn-circle.btn-xl(type='button', style='background-color:grey;margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0ss%;',alt='Generic placeholder image',onclick="openProject('" + item.id + "')")
+                    h2(style='text-align:center') #{item.name}
 
-            div
-                - each item in rows
-                    button.btn.btn-circle.btn-xl(type='button', style='background-color:'+ item.color +';margin-left:auto;margin-right:auto;display:block;margin-top:2%;margin-bottom:0ss%',onclick="setUser({id: " + item.id + ", name: '"+ item.name +"', color: '"+ item.color +"'})")
+
+
+    //List the saved documents
+    button#new.btn(onclick="enterName()") New Project
+    - each item in rows
+        button.btn.btn-default(onclick="openProject('" + item.id + "')") #{item.name}

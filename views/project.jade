@@ -1,0 +1,91 @@
+extends layout
+
+block content
+
+    div.wrap
+        div.floatleft
+            div.container-fluid
+                div.row
+                    div.panel.panel-danger
+                        div.panel-heading
+                            div.row
+                                div.col-md-6
+                                    h3.panel-title share.it &copy;
+                                div.col-md-6
+                                    h3.panel-title= title
+                        div#usersList
+
+
+                div.row
+                    div#normal.col-md-2
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE05E
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE24D
+                            button#saveProject.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE161
+                                //save
+                        div.btn-group
+                            input#full-color-picker
+                            button#setLine.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE150
+                            button#setCircles.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE062;
+                        div.btn-group
+                            button#dragTool.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE925
+                                //pan tool
+                                button.btn.btn-sm.btn-default.dropdown-toggle(class="menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                                    i.material-icons &#xE85B
+                                div.dropdown-menu
+                                        div.slider.slider-horizontal(style="width: 140px;")
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE245
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE3C1
+                                //crop din
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE3EC
+                                //grid_on
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE3F4
+                                //image
+                        div.btn-group
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE3AE
+                                //brush
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE40C
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE25E
+                                //format_shapes
+                        div.btn-group
+                            button#curveTool.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE155 
+                                //gesture
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE14E
+                                //content_cut
+                            button.btn.btn-sm.btn-default(class="menu")
+                                i.material-icons &#xE872
+            div.panel.panel-default
+                div.panel-heading Group chat
+                div.panel-body
+                    p user1: zprava
+                    p user2: zprava
+                    p user3: zprava
+                    p user2: zprava
+                    p user1: zprava
+                    p user4: zprava
+                form.navbar-form.navbar-left(role="search")
+                    div.row
+                        div.form-group
+                            input(type="text" class="form-control" placeholder="Type a message")
+                        button.btn.btn-sm.btn-default(class="chat")
+                            i.material-icons &#xE163
+                            //send
+        div.floatright
+                script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
+                canvas( id="draw", resize="true", keepalive="true" )
