@@ -1,0 +1,23 @@
+version: "2"
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+          - "db"
+    links:
+      - "db:mysql"
+  db:
+    image: mysql:5.6
+    environment:
+      - MYSQL_DATABASE=shareit
+      - MYSQL_USER=shareit
+      - MYSQL_PASSWORD=pass
+      - MYSQL_RANDOM_ROOT_PASSWORD="yes"
+    ports:
+        - "3306:3306"
+    volumes:
+          - ./db-dump:/docker-entrypoint-initdb.d

@@ -41,6 +41,8 @@ var pool = mysql.createPool({
     port: '3306',
     connectionLimit: 10,
 });
+
+
 //
 // var pool = mysql.createPool({
 //     host: 'localhost',
