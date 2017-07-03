@@ -34,13 +34,22 @@ var mysql = require('mysql');
 var projects = require('./projects.js');
 
 var pool = mysql.createPool({
-    host: '195.210.29.44',
+    host: 'db',
     user: 'shareit',
-    password: 'Toj*Oskit4',
+    password: 'pass',
     database: 'shareit',
-    port: '3310',
+    port: '3306',
     connectionLimit: 10,
 });
+//
+// var pool = mysql.createPool({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'redhat',
+//     database: 'shareit',
+//     port: '3306',
+//     connectionLimit: 10,
+// });
 
 // Get records from a city
 exports.getUsers = function (callback) {
@@ -207,4 +216,20 @@ exports.load = function (room, socket) {
      } else {
      loadError(socket);
      }*/
+    /*
+     CREATE TABLE projects (
+     id INT NOT NULL AUTO_INCREMENT,
+     canvas LONGBLOB,
+     PRIMARY KEY (id)
+     );
+
+     CREATE TABLE user (
+     id INT NOT NULL AUTO_INCREMENT,
+     name CHAR(30) NOT NULL,
+     PRIMARY KEY (id)
+     );
+
+
+
+    * */
 }
