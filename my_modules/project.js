@@ -6,7 +6,7 @@ projects = projects.projects;
 
 // Create an in memory paper canvas
 //TODO: pohraj sa s velkostou canvasu
-var drawing = paper.setup(new paper.Canvas(1920, 1080));
+var drawing = paper.setup(new paper.Canvas(10, 10));
 
 exports.drawInternal = function (room, data, func) {
     var project = projects[room].project;

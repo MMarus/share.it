@@ -1,16 +1,18 @@
 FROM node:argon
 
 RUN mkdir /app
+WORKDIR /app
+
 RUN apt-get update \
 && apt-get install -qq libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
-WORKDIR /app
-
-COPY package.json /app
-RUN npm install
-RUN npm install --save paper-jsdom-canvas 
+RUN echo pwd
 
 COPY . /app
+
+RUN npm install
+
+RUN npm list
 
 EXPOSE 3000
 
