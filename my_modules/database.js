@@ -167,28 +167,6 @@ exports.getProjectsByUser = function (userId, callback) {
     });
 };
 
-exports.getProject = function (id, callback) {
-    var sql = "SELECT * FROM project WHERE id="+id;
-    // get a connection from the pool
-    pool.getConnection(function (err, connection) {
-        if (err) {
-            console.log(err);
-            callback(true);
-            return;
-        }
-        // make the query
-        connection.query(sql, function (err, results) {
-            connection.release();
-            if (err) {
-                console.log(err);
-                callback(true);
-                return;
-            }
-            callback(false, results);
-        });
-    });
-};
-
 exports.storeProject = function (room) {
     var project = projects.projects[room].project;
     //console.log(project);
@@ -242,19 +220,6 @@ exports.load = function (room, socket) {
      loadError(socket);
      }*/
     /*
-     CREATE TABLE projects (
-     id INT NOT NULL AUTO_INCREMENT,
-     canvas LONGBLOB,
-     PRIMARY KEY (id)
-     );
-
-     CREATE TABLE user (
-     id INT NOT NULL AUTO_INCREMENT,
-     name CHAR(30) NOT NULL,
-     PRIMARY KEY (id)
-     );
-
-
 
     * */
 }

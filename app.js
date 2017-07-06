@@ -251,7 +251,7 @@ function subscribe(socket, room) {
         projects[room].project = new paper.Project();
         console.log(projects[room].project);
         projects[room].external_paths = {};
-        db.getProject(room, function(err, rows){
+        db.getProjectName(room, function(err, rows){
             if(rows.length != 1){
                 console.log("could not find the project");
             }

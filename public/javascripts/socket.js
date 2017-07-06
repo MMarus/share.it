@@ -4,14 +4,10 @@ var name = window.location.pathname.split("/")[2];
 socket = io.connect();
 
 function setUser() {
-    var data = {id: 0, name: $("#username").val(), color: 'blue'};
+    var data = {id: $("#username").val(), name: $("#username").val(), color: 'blue'};
     socket.emit('setUser', data);
     window.location = "drive/";
 }
-
-
-
-
 
 function openProject(project) {
     window.location = "/project/"+project;
@@ -22,20 +18,12 @@ function openProject(project) {
 }
 
 socket.on('user:connected', function( data ) {
-    $( "#usersList").empty();
+    $("#usersList").empty();
     var row;
     console.log( "NASLEDUJE FORIIIKK");
     for(row in data){
         console.log(data[row]);
-        $( "#usersList").append(
-        '<div id="userId' + data[row].id + '" class="row">' +
-            '<div class="col-md-1">' +
-                '<div style="width: 20px; height: 20px; background-color:'+data[row].color+'"></div>' +
-            '</div>'+
-            '<div class="col-md-6">' +
-                '<p>'+ data[row].name+
-            '</div>'+
-        '</div>');
+        $( "#usersList").append('<li><a href="#!" class="waves-effect">'+data[row].name+'</a></li>');
     }
 });
 

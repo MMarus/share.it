@@ -15,7 +15,6 @@ html
     script(src="/socket.io/socket.io.js")
     script(src="/javascripts/socket.js")
     script(src="/javascripts/jquery-1.11.3.js")
-    script(src="/javascripts/spectrum.js")
     script(src="/javascripts/paper/paper-full.js")
     script(src="/javascripts/bootstrap/bootstrap-slider.js")
     script(src="/javascripts/bootstrap/bootstrap.js")
@@ -24,5 +23,8 @@ html
     script(type="text/javascript", src="/js/materialize.js")
     script(type="text/javascript", src="/js/init.js")
   body(style="padding:0;")
-    include includes/navigationBar
-    block content
+    header
+      include includes/navigationBar
+    main
+      block content
+    footer

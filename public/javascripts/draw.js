@@ -6,6 +6,7 @@ var userColor = "black";
 
 socket.emit('getUserColor');
 socket.on('setUserColor', function(color) {
+    console.log("HELLO WORLD!");
     userColor = color;
 })
 
@@ -18,7 +19,7 @@ $('.slider').slider()
 
 //COLOR PICKING
 $("#full-color-picker").spectrum({
-    replacerClassName: 'btn btn-sm btn-default',
+    replacerClassName: '',
     color: "black",
     showInput: true,
     className: "full-spectrum",
@@ -452,19 +453,25 @@ socket.on( 'dragItemRemote', function( data, socketId ) {
 });
 
 ////////////////////////DRAG TOOL////
+function resetTools() {
+    $('#toolBox').find('a').removeClass("darken-4");
+}
 
+function activateTool(elem, tool) {
+    elem.click(function(){
+        tool.activate();
+        resetTools();
+        elem.addClass("darken-4");
+    });
+}
 
 //Activation of tools with buttons
 $(document).ready(function(){
-    $('#setLine').click(function(){
-        lineTool.activate();
-    });
+    activateTool($('#setLine'), lineTool);
 });
 
 $(document).ready(function(){
-    $('#setCircles').click(function(){
-        circlesTool.activate();
-    });
+    activateTool($('#setCircles'), circlesTool);
 });
 
 $(document).ready(function(){
@@ -475,21 +482,15 @@ $(document).ready(function(){
         console.log("SAVING PROJECT");
         socket.emit('saveProject');
     });
-
 });
 
 $(document).ready(function(){
-    $('#dragTool').click(function(e){
-        dragTool.activate();
-    });
+    activateTool($('#dragTool'), dragTool);
 });
 
 $(document).ready(function(){
-    $('#curveTool').click(function(e){
-        curveTool.activate();
-    });
+    activateTool($('#curveTool'), curveTool);
 });
-
 
 //TODO:
 //Pri subscribe poslat ID socketu a ulozit ho ako global identifikator

@@ -38,8 +38,6 @@ exports.saveProject = function (room) {
     db.storeProject(room);
 }
 
-
-
 function drawCircle( x, y, radius, color ) {
 
     // Render the circle with Paper.js
