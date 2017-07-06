@@ -1,73 +1,27 @@
 extends layout
 
 block content
-    div(style='background-color:black;')
-        #carousel-example-generic.carousel.slide(data-ride='carousel')
-            // Indicators
-            ol.carousel-indicators
-                li.active(data-target='#carousel-example-generic', data-slide-to='0')
-                li(data-target='#carousel-example-generic', data-slide-to='1')
-                li(data-target='#carousel-example-generic', data-slide-to='2')
-            // Wrapper for slides
-            .carousel-inner
-                .item.active
-                    img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="20" alt="")
-                    .carousel-caption
-                        h1(style='color:orange;font-size:300%;text-align:center')
-                            strong  SHARE.
-                            span(style='color:blue')
-                                strong IT
-
-
-                        h3(style='color:white;')
-                            strong the future of &nbsp
-                                span(style='color:yellow;')
-                                    strong T
-                                        span(style='color:blue;')
-                                            strong E
-                                                span(style='color:red')
-                                                    strong A
-                                                        span(style='color:green;')
-                                                            strong M&nbsp
-                                                                span(style='color:white;')
-                                                                    strong work
-
-                .item
-                    img(src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=', width="200" height="0" alt="")
-                    .carousel-caption
-
-                        h1
-                            strong Your color is&nbsp
-                                span
-                                    strong(style='color:'+ user.color +';') #{user.color}
-
-
-
-
-            // Controls
-            a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
-                span.glyphicon.glyphicon-chevron-left
-
-            a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
-                span.glyphicon.glyphicon-chevron-right
-    // Carousel
-
-    h1(style='font-size:500%;text-align:center') Current projects
-
-    .container.marketing
-        // Three columns of text below the carousel
-        .row
-            .col-lg-4
-                button.btn.btn-success.btn-circle.btn-xl(type='button', style='margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0ss%;',onclick="enterName()",alt='Generic placeholder image')
-                h2(style='text-align:center') New Project
-            - each item in rows
-                .col-lg-4
-                    button.btn.btn-circle.btn-xl(type='button', style='background-color:grey;margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0ss%;',alt='Generic placeholder image',onclick="openProject('" + item.id + "')")
-                    h2(style='text-align:center') #{item.name}
-
-
-
-    //List the saved documents
-    button#new.btn(onclick="enterName()") New Project
-    - each item in rows
-        button.btn.btn-default(onclick="openProject('" + item.id + "')") #{item.name}
+    div.section.no-pad-bot
+        div.container
+            h3.header.center.orange-text Select project!
+            div.row.center
+                //List the saved documents
+                div.col.s12
+                    form(method='POST' action='./')
+                        div.input-field.inline
+                            if errors
+                                input(id="projectName" name="projectName" type="text").invalid
+                                label(for="projectName") Insert valid name.
+                            else
+                                input(id="projectName" name="projectName" type="text").valid
+                                label(for="projectName") New project name.
+                        button#new.btn-floating.waves-effect.waves-light.btn-large.red(type='submit')
+                            i.material-icons add
+            - var cols = 4;
+            - var i = - cols;
+            while i <= rows.length
+                - i += cols;
+                div.row.center
+                    each item in rows.slice(i, i+cols)
+                        div.col.s3
+                            a.waves-effect.waves-light.btn-large(onclick="openProject('" + item.name + "')") #{item.name}

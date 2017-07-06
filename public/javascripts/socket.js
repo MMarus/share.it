@@ -3,10 +3,14 @@ var name = window.location.pathname.split("/")[2];
 
 socket = io.connect();
 
-function setUser(data) {
+function setUser() {
+    var data = {id: 0, name: $("#username").val(), color: 'blue'};
     socket.emit('setUser', data);
     window.location = "drive/";
 }
+
+
+
 
 
 function openProject(project) {

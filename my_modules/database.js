@@ -34,7 +34,7 @@ var mysql = require('mysql');
 var projects = require('./projects.js');
 
 var pool = mysql.createPool({
-    host: 'db',
+    host: '172.20.0.2',
     user: 'shareit',
     password: 'pass',
     database: 'shareit',
@@ -52,6 +52,28 @@ var pool = mysql.createPool({
 //     port: '3306',
 //     connectionLimit: 10,
 // });
+
+// Get records from a city
+exports.createProject = function (name) {
+    //TODO: use some framework for SQL for security
+    var sql = "INSERT INTO project (name, canvas) VALUES ('"+name+"', null)";
+    // get a connection from the pool
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log("COLUD NOT CONNECT TO DATABASE");
+            console.log(err);
+            return;
+        }
+        // make the query
+        connection.query(sql, function (err) {
+            connection.release();
+            if (err) {
+                console.log(err);
+                return;
+            }
+        });
+    });
+};
 
 // Get records from a city
 exports.getUsers = function (callback) {
@@ -78,8 +100,9 @@ exports.getUsers = function (callback) {
     });
 };
 
-exports.getProjectName = function (id, callback) {
-    var sql = "SELECT id, name FROM project WHERE id = "+id;
+exports.getProjectName = function (name, callback) {
+    var sql = "SELECT id, name FROM project WHERE name = '"+name+"'";
+    console.log(sql);
     // get a connection from the pool
     pool.getConnection(function (err, connection) {
         if (err) {

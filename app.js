@@ -9,6 +9,7 @@ var projects = require('./my_modules/projects.js').projects;
 var project = require('./my_modules/project.js');
 var paper = require('paper');
 var uuid = require('uuid');
+var expressValidator = require('express-validator');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -37,8 +38,10 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(expressValidator());
 //app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 //pri vecsom pocte uzivatelov, neukladat premennu do pameti
@@ -134,6 +137,11 @@ app.io.sockets.on('connection', function (socket) {
     socket.on('subscribe', function (data) {
         subscribe(socket, data);
         socket.room = data;
+    });
+
+    socket.on('createNewProject', function (name) {
+        console.log("Creating new project " + name);
+        db.createProject(name);
     });
 
      socket.on('createProject', function (name) {
