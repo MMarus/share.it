@@ -1,10 +1,18 @@
 extends layout
 
+block content
+    div.floatright#TestId
+        script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
+        canvas(id="draw", resize="true", keepalive="true" )
+
 block menu
     link(rel='stylesheet', href='/stylesheets/project.css')
+    script(src="/javascripts/spectrum.js")
+    script(src="/javascripts/messages.js")
+
     ul#slide-out.side-nav.fixed
         li
-            a.subheader Users:
+            a.subheader Users
         div#usersList
         li
             .divider
@@ -23,14 +31,25 @@ block menu
                 i.material-icons &#xE155
             a#saveProject.btn-floating.btn-large.waves-effect.waves-light.red
                 i.material-icons &#xE161
+        li
+            .divider
+        li
+            a.subheader Chat
+        ul#chat.collection.collection-in-navbar.black-text
 
+        li
+            .row
+                .col.s12
+                    .row
+                        .input-field.input-group.col.s12.black-text
+                            input#newMessage.validate(type='text' placeholder="Message")
+                            a.waves-effect.waves-circle.waves-light.btn-floating.secondary-content.red(onclick="sendMessage()")
+                                i.material-icons send
 
     a.button-collapse.hide-on-large-only(href='#', data-activates='slide-out')
         i.material-icons menu
 
-block content
-    div.floatright#TestId
-        script(src="/javascripts/spectrum.js")
-        script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
-        canvas(id="draw", resize="true", keepalive="true" )
+
+
+
 

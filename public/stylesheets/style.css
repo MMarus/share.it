@@ -9,7 +9,27 @@ canvas[resize] {
 }
 
 @media only screen and (max-width: 992px) {
-    .side-nav a.btn-large{
+    .side-nav a{
         padding: 0 !important;
     }
 }
+
+.input-group {
+    display: table;
+}
+
+.input-group input, .suffix {
+    display: table-cell;
+}
+
+.suffix {
+    width:1%;
+}
+
+.collection-in-navbar li {
+    padding: 10px 2px !important;
+}
+
+/*.input-field input {*/
+    /*color: black !important;*/
+/*}*/

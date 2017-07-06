@@ -182,7 +182,12 @@ app.io.sockets.on('connection', function (socket) {
         project.drawInternal(socket.room, data, 'dragItem');
     });
 
-
+    socket.on('new message', function (data) {
+        console.log("broadcast message");
+        var envelope = { username: socket.request.session.user.name, message: data};
+        console.log(envelope);
+        app.io.in(socket.room).emit('new message', envelope);
+    });
 
     socket.on('disconnect', function () {
         unsubscribe(socket);

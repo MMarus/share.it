@@ -8,7 +8,7 @@ socket.emit('getUserColor');
 socket.on('setUserColor', function(color) {
     console.log("HELLO WORLD!");
     userColor = color;
-})
+});
 
 //TODO: DRAG TOOL EMITTING
 
