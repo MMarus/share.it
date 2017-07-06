@@ -7,3 +7,9 @@ canvas[resize] {
 .col.s3 > .btn-large {
     width: 100%;
 }
+
+@media only screen and (max-width: 992px) {
+    .side-nav a.btn-large{
+        padding: 0 !important;
+    }
+}
