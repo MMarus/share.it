@@ -3,7 +3,7 @@ extends layout
 block content
     div.section.no-pad-bot
         div.container
-            h3.header.center.orange-text Select project!
+            h3.header.center.orange-text.text-darken-3 Select project!
             div.row.center
                 //List the saved documents
                 div.col.s12
@@ -11,10 +11,10 @@ block content
                         div.input-field.inline
                             if errors
                                 input(id="projectName" name="projectName" type="text").invalid
-                                label(for="projectName") Insert valid name.
+                                label.white-text(for="projectName") Insert valid name.
                             else
                                 input(id="projectName" name="projectName" type="text")
-                                label(for="projectName") New project name.
+                                label.white-text(for="projectName") New project name.
                         button#new.btn-floating.waves-effect.waves-light.btn-large.red(type='submit')
                             i.material-icons add
             - var cols = 4;

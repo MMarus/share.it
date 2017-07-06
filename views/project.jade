@@ -3,14 +3,14 @@ extends layout
 block content
     div.floatright#TestId
         script(type="text/paperscript", src="/javascripts/draw.js", canvas="draw")
-        canvas(id="draw", resize="true", keepalive="true" )
+        canvas.white(id="draw", resize="true", keepalive="true" )
 
 block menu
     link(rel='stylesheet', href='/stylesheets/project.css')
     script(src="/javascripts/spectrum.js")
     script(src="/javascripts/messages.js")
 
-    ul#slide-out.side-nav.fixed
+    ul#slide-out.side-nav.fixed.blue-grey.lighten-3
         li
             a.subheader Tool box
         div#toolBox
@@ -42,7 +42,7 @@ block menu
                 .col.s12
                     .row
                         .input-field.input-group.col.s12.black-text
-                            input#newMessage.validate(type='text' placeholder="Message")
+                            input#newMessage.validate.white(type='text' placeholder="Message")
                             a.waves-effect.waves-circle.waves-light.btn-floating.secondary-content.red(onclick="sendMessage()")
                                 i.material-icons send
 

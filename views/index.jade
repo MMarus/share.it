@@ -3,12 +3,33 @@ extends layout
 block content
     div.section.no-pad-bot
         div.container
-            h1.header.center.orange-text Real-time collaboration!
+            h1.header.center.orange-text.text-darken-3 Real-time collaborative whiteboard!
             div.row.center
                 div.col.s12
                     div.input-field.inline
                         input(id="username" type="text")
-                        label(for="username") What's your nickname?
+                        label.white-text(for="username") What's your nickname?
             div.row.center
-                a.btn-large.waves-effect.waves-light.orange(
+                a.btn-large.waves-effect.waves-light.orange.darken-3(
                 onclick="setUser()") Get Started
+block footerContent
+    .container
+        .row
+            .col.l6.s12
+                h5.white-text Share.it
+                p.grey-text.text-lighten-4 This is a demo of a lightweight whiteboard for real time collaboration.
+                a.github-button(href='https://github.com/MMarus/share.it', data-size='large', data-show-count='true', aria-label='Star MMarus/share.it on GitHub') Star
+            .col.l4.offset-l2.s12
+                h5.white-text Authors
+                ul
+                    li
+                        a.grey-text.text-lighten-3(href='http://mmarusic.eu') Marek Marusic
+                    li
+                        a.grey-text.text-lighten-3(href='#!') Eduard Rybar
+                    li
+                        a.grey-text.text-lighten-3(href='#!') Juraj Vida
+
+    .footer-copyright
+        .container
+            | © 2017 Share.it
+            a.grey-text.text-lighten-4.right(href='https://github.com/MMarus/share.it/blob/master/LICENSE') License
