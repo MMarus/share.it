@@ -15,7 +15,7 @@ services:
       - MYSQL_USER=shareit
       - MYSQL_PASSWORD=pass
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
-    ports:
-        - "3306:3306"
+    expose:
+        - "3306"
     volumes:
           - ./db-dump:/docker-entrypoint-initdb.d
